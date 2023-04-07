@@ -1,0 +1,28 @@
+// Define the analog input pin for the light sensor
+int LIGHT = A0;
+
+void setup() {
+    // Set the pin mode to INPUT
+    pinMode(LIGHT, INPUT);
+}
+
+void loop() {
+    // Read the analog value from the light sensor
+    int lightLevel = analogRead(LIGHT);
+
+    // Set the threshold level for sunlight detection
+    int level = 1;
+
+    // Check if the light level is above the threshold level and publish a "yes" event
+    if (lightLevel > level) {
+        Particle.publish("SUNLIGHT", "yes", PRIVATE);
+    }
+
+    // Check if the light level is below the threshold level and publish a "no" event
+    if (lightLevel < level) {
+        Particle.publish("SUNLIGHT", "no", PRIVATE);
+    }
+
+    // Wait for 30 seconds before reading the sensor again
+    delay(30s);
+    }
